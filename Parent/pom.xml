@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--
+    标注当前项目为父项目:
+        pom: 标注的当前项目为父项目
+        jar: 标注的当前项目打包为jar包
+        war: 标注的当前项目打包为war包
+     -->
+    <packaging>pom</packaging>
+
+    <!--
+     坐标: Maven中的坐标就是体现当前Maven项目的唯一性，也是将来别人引用我们当前Maven项目的唯一路径
+        坐标的命名:
+            groupId: 公司或组织的域名倒序 + 当前项目名称
+            artifactId: 当前项目的模块名称
+            version: 当前模块的版本
+     -->
+    <groupId>com.atguigu.maven</groupId>
+    <artifactId>Parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <!--
+    对多个项目模块，进行统一的管理,必须使用到聚合功能，就是在父工程中
+        引入需要聚合管理的子模块的路径即可，将来的一些统筹操作就可以在父工程中直接进行。
+     -->
+    <modules>
+        <module>../Hello</module>
+        <module>../HelloFriend</module>
+        <module>../MakeFriend</module>
+        <module>../SayHello</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <junit-version>4.12</junit-version>
+        <spring-aop-version>5.3.2</spring-aop-version>
+        <spring-boot-version>2.4.1</spring-boot-version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring-aop-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring-boot-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

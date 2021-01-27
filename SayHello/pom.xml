@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.atguigu.maven</groupId>
+        <artifactId>Parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../Parent</relativePath>
+    </parent>
+
+    <artifactId>SayHello</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--
+     统一管理目标jar包的版本:
+        在当前Maven工程中进行jar包版本的统一管理，方式就是自定义标签
+     -->
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!-- 当前jar包的作用范围，分为三种[compile、test、provided] -->
+            <!--
+             compile[默认是这个范围]:
+                1、main目录下的Java代码可以访问这个依赖范围
+                2、test目录下的Java代码可以访问这个依赖范围
+                3、部署到tomcat服务器上运行的WEB-INF的lib目录下
+             例如: 对Hello的依赖、主程序、测试程序和服务器运行时都需要用到
+             test:
+                1、main目录下的Java代码不能访问这个范围的依赖
+                2、test目录下的Java可以访问这个范围的依赖
+                3、部署到tomcat服务器上运行时，不会放在WEB-INF的lib目录下
+             例如: 对junit的依赖。仅仅是测试程序部分需要。
+             provided:
+                1、main目录下的Java代码可以访问这个范围的依赖
+                2、test目录下的Java代码可以访问这个范围的依赖
+                3、部署到tomcat服务器上运行时，不会放在WEB-INF的lib目录下
+             例如: servlet-api在服务器上运行时，servlet容器会提供相关的API，所以部署的时候不需要。
+             -->
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atguigu.maven</groupId>
+            <artifactId>Hello</artifactId>
+            <version>1.0-SNAPSHOT</version>
+
+            <!--
+             依赖的传递性:
+                当前Maven工程之间相互依赖具有传递的特性，但是还是取决于被传递者的使用范围。
+             依赖的原则: 解决jar包冲突
+                路径最短者优先
+                先声明者优先
+             依赖的排除:
+                当前Maven工程如果不想让传递过来的jar生效，可以使用exclusions进行处理
+            -->
+            <!-- 排除当前jar包的依赖 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
